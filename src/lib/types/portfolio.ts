@@ -1,0 +1,49 @@
+export interface PortfolioItem {
+  id: string;
+  title: string;
+  description: string | null;
+  category: string;
+  start_date: string;
+  end_date: string | null;
+  created_at: string | null;
+}
+
+export interface PortfolioItemInput {
+  title: string;
+  description: string | null;
+  category: string;
+  start_date: string;
+  end_date: string | null;
+}
+
+export interface PortfolioFormData {
+  title: string;
+  description: string;
+  category: string;
+  start_date: string;
+  end_date: string;
+  secret_key: string;
+}
+
+export interface FormErrors {
+  title?: string;
+  description?: string;
+  category?: string;
+  start_date?: string;
+  end_date?: string;
+  secret_key?: string;
+}
+
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
+
+export type NotificationType = 'success' | 'error' | 'info';
+
+export interface Notification {
+  id: string;
+  message: string;
+  type: NotificationType;
+}
