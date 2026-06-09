@@ -40,12 +40,10 @@
       id="nav-links"
       class="nav-links"
       class:nav-links-mobile-active={isMenuOpen}
-      role="menubar"
     >
       {#each navLinks as { href, label }}
         <a
           href={href}
-          role="menuitem"
           class:active={$page.url.pathname === href}
           onclick={closeMenu}
         >

@@ -9,6 +9,7 @@
 
   let items = $derived(data.items);
   let grouped = $derived(data.grouped);
+  let loadError = $derived(data.error);
 
   let isModalOpen = $state(false);
   let selectedItem = $state<PortfolioItem | null>(null);
@@ -33,7 +34,11 @@
     </p>
   </section>
 
-  {#if items.length === 0}
+  {#if loadError}
+    <div class="state-message state-message--error" role="alert">
+      {loadError}
+    </div>
+  {:else if items.length === 0}
     <div class="state-message empty-state">
       ยังไม่มีผลงานในระบบ...
       <a href="/add">เพิ่มผลงานชิ้นแรก!</a>
@@ -179,6 +184,13 @@
     padding-block: var(--space-16);
     color: var(--color-text-secondary);
     font-size: var(--text-lg);
+  }
+
+  .state-message--error {
+    color: var(--color-error);
+    background-color: var(--color-error-bg);
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-md);
   }
 
   .empty-state a {

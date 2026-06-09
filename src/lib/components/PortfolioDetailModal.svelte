@@ -58,7 +58,6 @@
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
-      <span class="sr-only">ปิด</span>
     </button>
 
     <h2 id="modal-title" class="modal-title">{item.title}</h2>
@@ -166,17 +165,5 @@
   .modal-description--empty {
     color: var(--color-text-muted);
     font-style: italic;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>
