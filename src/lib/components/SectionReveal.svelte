@@ -1,7 +1,7 @@
 <script lang="ts">
   let { children }: { children: import('svelte').Snippet } = $props();
 
-  let node: HTMLElement | undefined = $state();
+  let node: HTMLDivElement | undefined = $state();
   let isRevealed = $state(false);
 
   $effect(() => {
@@ -25,21 +25,20 @@
   });
 </script>
 
-{#if isRevealed}
-  <div bind:this={node} class="section-reveal is-revealed">
-    {@render children()}
-  </div>
-{:else}
-  <div bind:this={node} class="section-reveal">
-    {@render children()}
-  </div>
-{/if}
+<div
+  bind:this={node}
+  class="section-reveal"
+  class:is-revealed={isRevealed}
+>
+  {@render children()}
+</div>
 
 <style>
   .section-reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .section-reveal.is-revealed {
