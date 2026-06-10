@@ -157,19 +157,19 @@
   @media (max-inline-size: 768px) {
     .hamburger {
       display: flex;
+      z-index: calc(var(--z-modal) + 1);
     }
 
     .nav-menu {
       display: none;
-      position: absolute;
-      inset-block-start: 64px;
-      inset-inline-start: 0;
-      inline-size: 100%;
+      position: fixed;
+      inset: 0;
       flex-direction: column;
-      gap: 0;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-xl);
       background-color: var(--color-canvas);
-      border-bottom: 1px solid var(--color-hairline);
-      padding-block: var(--space-sm);
+      z-index: var(--z-modal);
     }
 
     .nav-menu--open {
@@ -177,8 +177,9 @@
     }
 
     .nav-link {
-      padding: var(--space-md) var(--container-gutter);
-      inline-size: 100%;
+      padding: var(--space-md);
+      font-size: var(--text-title-md);
+      font-weight: var(--text-title-md-weight);
     }
   }
 </style>

@@ -84,6 +84,7 @@
     text-decoration: none;
     border: none;
     cursor: pointer;
+    box-shadow: var(--elevation-button);
     transition: background-color 0.15s ease;
   }
 

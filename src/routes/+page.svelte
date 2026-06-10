@@ -78,8 +78,10 @@
           {/if}
 
           <div class="projects-grid">
-            {#each ed.innovationItems.slice(0, 4) as item (item.id)}
-              <ProjectCard {item} onclick={() => openModal(item)} />
+            {#each ed.innovationItems.slice(0, 4) as item, i (item.id)}
+              <div class="project-cell" class:project-cell--offset={i % 2 === 1}>
+                <ProjectCard {item} onclick={() => openModal(item)} />
+              </div>
             {/each}
           </div>
         </EditorialSection>
@@ -201,6 +203,11 @@
     cursor: pointer;
   }
 
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-info-border);
+    outline-offset: 2px;
+  }
+
   .identity-content {
     max-inline-size: 640px;
   }
@@ -221,6 +228,15 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
   }
+
+  .project-cell {
+    display: flex;
+  }
+
+  .project-cell--offset {
+    padding-block-start: var(--space-xl);
+  }
+
 
   .recognition-card {
     padding: var(--space-xl);
