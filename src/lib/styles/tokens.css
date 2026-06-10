@@ -1,61 +1,125 @@
 :root {
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --space-20: 5rem;
+  /* ─── Colors (DESIGN.md §17-48) ─── */
 
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Brand & Accent */
+  --color-primary: #181d26;
+  --color-primary-active: #0d1218;
 
-  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
-  --text-base: clamp(1rem, 0.925rem + 0.375vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);
-  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.625rem);
-  --text-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2.125rem);
-  --text-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.875rem);
-  --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.75rem);
+  /* Surface */
+  --color-canvas: #ffffff;
+  --color-surface-soft: #f8fafc;
+  --color-surface-strong: #e0e2e6;
+  --color-surface-dark: #181d26;
+  --color-surface-dark-elevated: #1d1f25;
+  --color-hairline: #dddddd;
 
-  --color-white: #ffffff;
-  --color-bg: #f8f9fa;
-  --color-surface: #ffffff;
-  --color-border: #e2e8f0;
-  --color-text-primary: #1a202c;
-  --color-text-secondary: #4a5568;
-  --color-text-muted: #718096;
-  --color-accent: #2b6cb0;
-  --color-accent-hover: #1a4e7c;
-  --color-accent-light: #ebf4ff;
-  --color-error: #c53030;
-  --color-error-bg: #fff5f5;
-  --color-success: #276749;
-  --color-success-bg: #f0fff4;
-  --color-info: #2b6cb0;
-  --color-info-bg: #ebf8ff;
+  /* Text */
+  --color-ink: #181d26;
+  --color-body: #333840;
+  --color-muted: #41454d;
+  --color-border-strong: #9297a0;
+  --color-on-primary: #ffffff;
+  --color-on-dark: #ffffff;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+  /* Signature Card Surfaces */
+  --color-signature-coral: #aa2d00;
+  --color-signature-forest: #0a2e0e;
+  --color-signature-cream: #f5e9d4;
+  --color-signature-peach: #fcab79;
+  --color-signature-mint: #a8d8c4;
+  --color-signature-yellow: #f4d35e;
+  --color-signature-mustard: #d9a441;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  /* Semantic */
+  --color-link: #1b61c9;
+  --color-link-active: #1a3866;
+  --color-info: #254fad;
+  --color-info-border: #458fff;
+  --color-success: #006400;
+  --color-success-border: #39bf45;
+
+  /* ─── Typography (DESIGN.md §57-77) ─── */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  --text-display-xl: 48px;
+  --text-display-xl-weight: 500;
+  --text-display-xl-line: 1.1;
+
+  --text-display-lg: 40px;
+  --text-display-lg-weight: 400;
+  --text-display-lg-line: 1.2;
+
+  --text-display-md: 32px;
+  --text-display-md-weight: 400;
+  --text-display-md-line: 1.2;
+
+  --text-title-lg: 24px;
+  --text-title-lg-weight: 400;
+  --text-title-lg-line: 1.35;
+  --text-title-lg-spacing: 0.12px;
+
+  --text-title-md: 20px;
+  --text-title-md-weight: 400;
+  --text-title-md-line: 1.5;
+
+  --text-title-sm: 18px;
+  --text-title-sm-weight: 500;
+  --text-title-sm-line: 1.4;
+
+  --text-label-md: 16px;
+  --text-label-md-weight: 500;
+  --text-label-md-line: 1.4;
+
+  --text-button: 16px;
+  --text-button-weight: 500;
+  --text-button-line: 1.4;
+
+  --text-body-md: 14px;
+  --text-body-md-weight: 400;
+  --text-body-md-line: 1.25;
+
+  --text-caption: 14px;
+  --text-caption-weight: 500;
+  --text-caption-line: 1.35;
+  --text-caption-spacing: 0.16px;
+
+  --text-legal: 13.12px;
+  --text-legal-weight: 600;
+  --text-legal-line: 1.2;
+
+  /* ─── Spacing (DESIGN.md §86-91) ─── */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 96px;
+
+  /* ─── Border Radius (DESIGN.md §122-130) ─── */
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
   --radius-lg: 12px;
-  --radius-full: 9999px;
+  --radius-pill: 9999px;
+  --radius-full: 50%;
 
-  --transition-fast: 150ms ease;
-  --transition-base: 250ms ease;
-  --transition-slow: 350ms ease;
+  /* ─── Elevation (DESIGN.md §102-116) ─── */
+  --elevation-flat: none;
+  --elevation-hairline: 0 0 0 1px var(--color-hairline);
+  --elevation-button: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --elevation-button-focus: 0 0 0 2px var(--color-info-border);
 
+  /* ─── Z-Index ─── */
   --z-base: 1;
   --z-dropdown: 100;
   --z-sticky: 200;
   --z-modal-backdrop: 1000;
   --z-modal: 1100;
-  --z-notification: 2000;
+
+  /* ─── Container ─── */
+  --container-max: 1280px;
+  --container-gutter: var(--space-xxl);
 }
