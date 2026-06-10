@@ -1,14 +1,23 @@
 <script lang="ts">
   import type { PageProps } from './$types';
-  import PortfolioDetailModal from '$lib/components/PortfolioDetailModal.svelte';
-  import { scrollReveal } from '$lib/utils/scrollReveal';
-  import { formatDate } from '$lib/utils/date';
   import type { PortfolioItem } from '$lib/types/portfolio';
+  import Hero from '$lib/components/Hero.svelte';
+  import EditorialSection from '$lib/components/EditorialSection.svelte';
+  import SignatureSection from '$lib/components/SignatureSection.svelte';
+  import ProjectFeatured from '$lib/components/ProjectFeatured.svelte';
+  import ProjectCard from '$lib/components/ProjectCard.svelte';
+  import SpeakerSection from '$lib/components/SpeakerSection.svelte';
+  import AcademicSection from '$lib/components/AcademicSection.svelte';
+  import InnovationSection from '$lib/components/InnovationSection.svelte';
+  import Timeline from '$lib/components/Timeline.svelte';
+  import TestimonialSection from '$lib/components/TestimonialSection.svelte';
+  import CTABand from '$lib/components/CTABand.svelte';
+  import Modal from '$lib/components/Modal.svelte';
+  import SectionReveal from '$lib/components/SectionReveal.svelte';
 
   let { data }: PageProps = $props();
 
-  let items = $derived(data.items);
-  let grouped = $derived(data.grouped);
+  let editorial = $derived(data.editorial);
   let loadError = $derived(data.error);
 
   let isModalOpen = $state(false);
@@ -25,207 +34,229 @@
   }
 </script>
 
-<main class="container">
-  <section class="hero">
-    <h1>Suradet Pratomsak</h1>
-    <p class="tagline">
-      เภสัชกรชำนาญการ โรงพยาบาลสระโบสถ์ นักพัฒนา, วิทยากร, และผู้สร้างสรรค์นวัตกรรม
-      ที่นี่คือพื้นที่รวบรวมผลงานและประสบการณ์ของผม
-    </p>
-  </section>
-
-  {#if loadError}
-    <div class="state-message state-message--error" role="alert">
-      {loadError}
+{#if loadError}
+  <div class="state-error" role="alert">{loadError}</div>
+{:else if editorial}
+  {#if editorial.items.length === 0}
+    <div class="state-empty">
+      <p>No portfolio items yet.</p>
+      <a href="/add" class="btn-primary">Add your first item</a>
     </div>
-  {:else if items.length === 0}
-    <div class="state-message empty-state">
-      ยังไม่มีผลงานในระบบ...
-      <a href="/add">เพิ่มผลงานชิ้นแรก!</a>
-    </div>
-  {/if}
+  {:else}
+    {#each [editorial] as ed}
+      <!-- 1. Hero — White Surface -->
+      <SectionReveal>
+        <Hero metrics={ed.metrics} />
+      </SectionReveal>
 
-  {#if items.length > 0}
-    {#each Object.entries(grouped) as [category, categoryItems]}
-      <section use:scrollReveal class="category-section">
-        <h2 class="category-title">{category}</h2>
-        <div class="item-title-list">
-          {#each categoryItems as item (item.id)}
-            <button
-              class="item-title"
-              onclick={() => openModal(item)}
-              aria-label="ดูรายละเอียด: {item.title}"
-              type="button"
-            >
-              <span class="title-text">{item.title}</span>
-              <span class="item-date">{formatDate(item.start_date)}</span>
-            </button>
-          {/each}
-        </div>
-      </section>
+      <!-- 2. Professional Identity — Coral Signature -->
+      <SectionReveal>
+        <SignatureSection
+          id="identity"
+          surface="coral"
+          label="Professional Identity"
+          headline="Clinical Pharmacist &amp; Healthcare Innovator"
+          supporting="Transforming healthcare delivery through evidence-based practice, education, and innovation at Saraburi Provincial Hospital."
+        >
+          <div class="identity-content">
+            <p class="identity-text">
+              With a career spanning clinical practice, academic research, public health advocacy,
+              and healthcare innovation, I bring a multidisciplinary approach to improving patient
+              outcomes across Thailand's healthcare system.
+            </p>
+          </div>
+        </SignatureSection>
+      </SectionReveal>
+
+      <!-- 3. Signature Projects — White Surface -->
+      <SectionReveal>
+        <EditorialSection id="projects" label="Signature Projects">
+          {#if ed.flagshipProject}
+            <div class="projects-flagship">
+              <ProjectFeatured item={ed.flagshipProject} />
+            </div>
+          {/if}
+
+          <div class="projects-grid">
+            {#each ed.innovationItems.slice(0, 4) as item (item.id)}
+              <ProjectCard {item} onclick={() => openModal(item)} />
+            {/each}
+          </div>
+        </EditorialSection>
+      </SectionReveal>
+
+      <!-- 4. Speaker Experience — Cream Surface -->
+      {#if ed.speakerItems.length > 0}
+        <SectionReveal>
+          <EditorialSection id="speaker" surface="cream" label="Speaker Experience">
+            <SpeakerSection items={ed.speakerItems} />
+          </EditorialSection>
+        </SectionReveal>
+      {/if}
+
+      <!-- 5. Academic Contributions — Dark Surface -->
+      {#if ed.academicItems.length > 0}
+        <SectionReveal>
+          <SignatureSection
+            id="academic"
+            surface="dark"
+            label="Academic Contributions"
+            headline="Research &amp; Publications"
+            supporting="Contributing to the body of knowledge in clinical pharmacy and public health."
+          >
+            <AcademicSection items={ed.academicItems} />
+          </SignatureSection>
+        </SectionReveal>
+      {/if}
+
+      <!-- 6. Healthcare Innovations — White Surface -->
+      {#if ed.innovationItems.length > 0}
+        <SectionReveal>
+          <EditorialSection id="innovations" label="Healthcare Innovations">
+            <InnovationSection items={ed.innovationItems} />
+          </EditorialSection>
+        </SectionReveal>
+      {/if}
+
+      <!-- 7. Career Timeline — Soft Surface -->
+      {#if ed.allTimeline.length > 0}
+        <SectionReveal>
+          <EditorialSection id="timeline" surface="soft" label="Career Timeline">
+            <Timeline entries={ed.allTimeline} />
+          </EditorialSection>
+        </SectionReveal>
+      {/if}
+
+      <!-- 8. Recognition — Mint Signature -->
+      <SectionReveal>
+        <SignatureSection
+          id="recognition"
+          surface="mint"
+          label="Recognition"
+          headline="Professional Impact"
+          supporting="Committed to advancing healthcare through continuous learning, teaching, and innovation."
+        >
+          <TestimonialSection>
+            <article class="recognition-card">
+              <p class="recognition-stat">{ed.metrics.academicWorks}+</p>
+              <p class="recognition-label">Academic Works Published</p>
+            </article>
+            <article class="recognition-card">
+              <p class="recognition-stat">{ed.metrics.speakerSessions}+</p>
+              <p class="recognition-label">Speaker Sessions Delivered</p>
+            </article>
+            <article class="recognition-card">
+              <p class="recognition-stat">{ed.metrics.innovations}+</p>
+              <p class="recognition-label">Healthcare Innovations</p>
+            </article>
+          </TestimonialSection>
+        </SignatureSection>
+      </SectionReveal>
+
+      <!-- 9. CTA — Dark Surface -->
+      <SectionReveal>
+        <CTABand
+          headline="Let's work together to advance healthcare"
+          supporting="Have a project, speaking opportunity, or research collaboration in mind?"
+          label="Get in touch"
+        />
+      </SectionReveal>
     {/each}
   {/if}
-</main>
+{/if}
 
 {#if isModalOpen && selectedItem}
-  <PortfolioDetailModal item={selectedItem} onclose={closeModal} />
+  <Modal item={selectedItem} onclose={closeModal} />
 {/if}
 
 <style>
-  .container {
-    max-inline-size: 1100px;
-    margin-inline: auto;
-    padding-inline: var(--space-8);
-    padding-block: var(--space-8);
-  }
-
-  .hero {
+  .state-error {
+    padding: var(--space-xxl);
     text-align: center;
-    padding-block: var(--space-16) var(--space-10);
-    border-block-end: 1px solid var(--color-border);
-    margin-block-end: var(--space-16);
+    color: var(--color-body);
+    font-size: var(--text-body-md);
   }
 
-  .hero h1 {
-    font-size: var(--text-4xl);
-    font-weight: 700;
-    color: var(--color-accent);
-    margin-block-end: var(--space-4);
-    letter-spacing: -0.02em;
-  }
-
-  .tagline {
-    font-size: var(--text-lg);
-    color: var(--color-text-secondary);
-    max-inline-size: 700px;
-    margin-inline: auto;
-    line-height: 1.8;
-  }
-
-  .category-section {
-    margin-block-end: var(--space-16);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  }
-
-  :global(.category-section.is-revealed) {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .category-title {
-    font-size: var(--text-2xl);
-    font-weight: 600;
-    margin-block-end: var(--space-8);
-    position: relative;
-    padding-inline-start: var(--space-6);
-  }
-
-  .category-title::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 50%;
-    transform: translateY(-50%);
-    block-size: 70%;
-    inline-size: 4px;
-    background-color: var(--color-accent);
-    border-radius: var(--radius-sm);
-  }
-
-  .item-title-list {
+  .state-empty {
+    padding-block: var(--space-section);
+    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .item-title {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    inline-size: 100%;
-    padding: var(--space-5) var(--space-6);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    gap: var(--space-lg);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-md) var(--space-lg);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: var(--text-button);
+    font-weight: var(--text-button-weight);
+    line-height: var(--text-button-line);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    border: none;
     cursor: pointer;
-    transition: all var(--transition-fast);
-    text-align: start;
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    color: var(--color-text-primary);
   }
 
-  .item-title:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(43, 108, 176, 0.1);
+  .identity-content {
+    max-inline-size: 640px;
   }
 
-  .item-title:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+  .identity-text {
+    font-size: var(--text-title-md);
+    font-weight: var(--text-title-md-weight);
+    line-height: var(--text-title-md-line);
+    opacity: 0.9;
   }
 
-  .title-text {
-    font-weight: 500;
+  .projects-flagship {
+    margin-block-end: var(--space-xxl);
   }
 
-  .item-date {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    flex-shrink: 0;
-    margin-inline-start: var(--space-4);
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
   }
 
-  .state-message {
-    text-align: center;
-    padding-block: var(--space-16);
-    color: var(--color-text-secondary);
-    font-size: var(--text-lg);
-  }
-
-  .state-message--error {
-    color: var(--color-error);
-    background-color: var(--color-error-bg);
-    border: 1px solid var(--color-error);
+  .recognition-card {
+    padding: var(--space-xl);
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
     border-radius: var(--radius-md);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    align-items: center;
   }
 
-  .empty-state a {
-    font-weight: 600;
+  .recognition-stat {
+    font-size: var(--text-display-md);
+    font-weight: var(--text-display-md-weight);
+    line-height: var(--text-display-md-line);
+    color: var(--color-ink);
+  }
+
+  .recognition-label {
+    font-size: var(--text-caption);
+    font-weight: var(--text-caption-weight);
+    letter-spacing: var(--text-caption-spacing);
+    color: var(--color-muted);
+  }
+
+  @media (max-inline-size: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-inline-size: 768px) {
-    .container {
-      padding-inline: var(--space-4);
-    }
-
-    .hero {
-      padding-block: var(--space-10) var(--space-8);
-    }
-
-    .hero h1 {
-      font-size: var(--text-3xl);
-    }
-
-    .tagline {
-      font-size: var(--text-base);
-    }
-
-    .category-title {
-      font-size: var(--text-xl);
-    }
-
-    .item-title {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-2);
-    }
-
-    .item-date {
-      margin-inline-start: 0;
+    .projects-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

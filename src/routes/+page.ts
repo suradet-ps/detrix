@@ -1,5 +1,5 @@
 import { getSupabase } from '$lib/supabase/client';
-import type { PortfolioItem } from '$lib/types/portfolio';
+import type { PortfolioItem, EditorialData, TimelineEntry } from '$lib/types/portfolio';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async () => {
@@ -12,39 +12,52 @@ export const load: PageLoad = async () => {
 
   if (error) {
     return {
-      items: [],
-      grouped: {},
+      editorial: null,
       error: 'เกิดข้อผิดพลาดในการโหลดข้อมูล'
-    };
+    } as const;
   }
 
   const items = (data ?? []) as PortfolioItem[];
 
-  const categoryOrder = ['วิทยากร', 'ผลงานวิชาการ', 'นวัตกรรม', 'การประชุม/อบรม'];
+  const speakerItems = items.filter((i) => i.category === 'วิทยากร');
+  const academicItems = items.filter((i) => i.category === 'ผลงานวิชาการ');
+  const innovationItems = items.filter((i) => i.category === 'นวัตกรรม');
+  const conferenceItems = items.filter((i) => i.category === 'การประชุม/อบรม');
 
-  const groups: Record<string, PortfolioItem[]> = {};
-  for (const item of items) {
-    const category = item.category || 'อื่นๆ';
-    if (!groups[category]) {
-      groups[category] = [];
-    }
-    groups[category]!.push(item);
-  }
+  const allTimeline: TimelineEntry[] = items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    date: item.start_date,
+    category: item.category,
+    type: item.category === 'วิทยากร' ? 'speaker'
+      : item.category === 'ผลงานวิชาการ' ? 'academic'
+      : item.category === 'นวัตกรรม' ? 'innovation'
+      : 'conference' as const
+  }));
 
-  const sorted: Record<string, PortfolioItem[]> = {};
-  for (const category of categoryOrder) {
-    if (groups[category]) {
-      sorted[category] = groups[category]!;
-      delete groups[category];
-    }
-  }
-  for (const [category, categoryItems] of Object.entries(groups)) {
-    sorted[category] = categoryItems;
-  }
+  const flagshipProject = innovationItems[0] ?? speakerItems[0] ?? academicItems[0] ?? null;
+
+  const editorial: EditorialData = {
+    items,
+    speakerItems,
+    academicItems,
+    innovationItems,
+    conferenceItems,
+    flagshipProject,
+    metrics: {
+      academicWorks: academicItems.length,
+      speakerSessions: speakerItems.length,
+      innovations: innovationItems.length,
+      professionalsReached: Math.max(
+        academicItems.length + speakerItems.length + innovationItems.length + conferenceItems.length,
+        100
+      )
+    },
+    allTimeline
+  };
 
   return {
-    items,
-    grouped: sorted,
+    editorial,
     error: null
-  };
+  } as const;
 };

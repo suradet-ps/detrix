@@ -1,10 +1,13 @@
 <script lang="ts">
   import '../lib/styles/global.css';
-  import Navbar from '$lib/components/Navbar.svelte';
-  import Notification from '$lib/components/Notification.svelte';
+  import Navigation from '$lib/components/Navigation.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+
   let { children } = $props();
 </script>
 
-<Navbar />
-{@render children()}
-<Notification />
+<Navigation />
+<main id="main-content">
+  {@render children()}
+</main>
+<Footer />
