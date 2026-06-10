@@ -18,6 +18,12 @@
     }
   }
 
+  function handleBackdropKeydown(e: KeyboardEvent): void {
+    if (e.target === modalRef && (e.key === 'Enter' || e.key === ' ')) {
+      onclose();
+    }
+  }
+
   $effect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -34,6 +40,7 @@
   aria-modal="true"
   aria-labelledby="modal-title"
   onclick={handleBackdropClick}
+  onkeydown={handleBackdropKeydown}
   tabindex="-1"
   bind:this={modalRef}
 >

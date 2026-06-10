@@ -52,9 +52,9 @@
   }
 </script>
 
-<main class="container">
-  <div class="form-card">
-    <h2>เพิ่มผลงานใหม่</h2>
+<main class="add-page">
+  <div class="add-card">
+    <h2 class="add-heading">เพิ่มผลงานใหม่</h2>
 
     <form
       method="POST"
@@ -209,7 +209,7 @@
         {/if}
       </div>
 
-      <button type="submit" class="form-button" disabled={isSubmitting}>
+      <button type="submit" class="submit-btn" disabled={isSubmitting}>
         {isSubmitting ? 'กำลังบันทึก...' : 'บันทึกผลงาน'}
       </button>
     </form>
@@ -217,72 +217,70 @@
 </main>
 
 <style>
-  .container {
-    max-inline-size: 1100px;
+  .add-page {
+    max-inline-size: 640px;
     margin-inline: auto;
-    padding-inline: var(--space-8);
-    padding-block: var(--space-8);
+    padding-inline: var(--container-gutter);
+    padding-block: var(--space-section);
   }
 
-  .form-card {
-    background-color: var(--color-surface);
-    border-radius: var(--radius-md);
-    padding: var(--space-10);
-    margin-block: var(--space-8);
-    border: 1px solid var(--color-border);
+  .add-card {
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xxl);
   }
 
-  .form-card h2 {
-    font-size: var(--text-2xl);
+  .add-heading {
+    font-size: var(--text-display-md);
+    font-weight: var(--text-display-md-weight);
+    line-height: var(--text-display-md-line);
+    color: var(--color-ink);
     text-align: center;
-    margin-block-end: var(--space-10);
+    margin-block-end: var(--space-xxl);
   }
 
   .form-group {
-    margin-block-end: var(--space-6);
+    margin-block-end: var(--space-lg);
   }
 
   .form-group label {
     display: block;
-    margin-block-end: var(--space-2);
-    font-weight: 500;
-    color: var(--color-text-secondary);
+    margin-block-end: var(--space-xs);
+    font-size: var(--text-label-md);
+    font-weight: var(--text-label-md-weight);
+    line-height: var(--text-label-md-line);
+    color: var(--color-body);
   }
 
   .required {
-    color: var(--color-error);
+    color: var(--color-info);
   }
 
   .form-group input,
   .form-group textarea,
   .form-group select {
     inline-size: 100%;
-    padding: var(--space-3) var(--space-4);
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    color: var(--color-text-primary);
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    transition: all var(--transition-fast);
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body-md);
+    transition: border-color 0.15s ease;
   }
 
   .form-group input:focus,
   .form-group textarea:focus,
   .form-group select:focus {
     outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.15);
+    border-color: var(--color-info-border);
   }
 
   .form-group input[aria-invalid="true"],
   .form-group select[aria-invalid="true"] {
-    border-color: var(--color-error);
-  }
-
-  .form-group input[aria-invalid="true"]:focus,
-  .form-group select[aria-invalid="true"]:focus {
-    box-shadow: 0 0 0 2px rgba(197, 48, 48, 0.15);
+    border-color: var(--color-info);
   }
 
   .form-group textarea {
@@ -291,45 +289,29 @@
   }
 
   .field-error {
-    color: var(--color-error);
-    font-size: var(--text-sm);
-    margin-block-start: var(--space-1);
+    color: var(--color-info);
+    font-size: var(--text-body-md);
+    margin-block-start: var(--space-xxs);
     margin-block-end: 0;
   }
 
-  .form-button {
+  .submit-btn {
     inline-size: 100%;
-    padding: var(--space-4) var(--space-6);
-    margin-block-start: var(--space-4);
+    padding: var(--space-md) var(--space-lg);
+    margin-block-start: var(--space-lg);
     border: none;
-    border-radius: var(--radius-md);
-    background-color: var(--color-accent);
-    color: var(--color-white);
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: var(--text-base);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-button);
+    font-weight: var(--text-button-weight);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: background-color 0.15s ease;
   }
 
-  .form-button:hover:not(:disabled) {
-    background-color: var(--color-accent-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .form-button:disabled {
+  .submit-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-  }
-
-  @media (max-inline-size: 768px) {
-    .container {
-      padding-inline: var(--space-4);
-    }
-
-    .form-card {
-      padding: var(--space-6);
-    }
   }
 </style>

@@ -51,7 +51,6 @@
         <a
           href={href}
           class="nav-link"
-          role="listitem"
           onclick={closeMenu}
         >
           {label}
