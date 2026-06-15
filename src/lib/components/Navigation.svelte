@@ -3,6 +3,15 @@
   import { page } from '$app/stores';
 
   let isMenuOpen = $state(false);
+  let isMobile = $state(false);
+
+  $effect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    isMobile = mql.matches;
+    const handler = (e: MediaQueryListEvent) => { isMobile = e.matches; };
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  });
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -33,6 +42,12 @@
       return lockBodyScroll();
     }
   });
+
+  $effect(() => {
+    if (!isMobile && isMenuOpen) {
+      isMenuOpen = false;
+    }
+  });
 </script>
 
 <nav class="top-nav" aria-label="Main navigation">
@@ -41,33 +56,37 @@
       <span class="brand-mark" aria-hidden="true">SP</span>
     </a>
 
-    <div class="nav-desktop-links">
-      {#each navLinks as { href, label }}
-        <a
-          href={href}
-          class="nav-desktop-link"
-          class:nav-desktop-link--active={isActive(href)}
-        >
-          {label}
-          <span class="nav-desktop-link-indicator" aria-hidden="true"></span>
-        </a>
-      {/each}
-      <a href="/add" class="nav-desktop-cta">+ Add</a>
-    </div>
+    {#if !isMobile}
+      <div class="nav-desktop-links">
+        {#each navLinks as { href, label }}
+          <a
+            href={href}
+            class="nav-desktop-link"
+            class:nav-desktop-link--active={isActive(href)}
+          >
+            {label}
+            <span class="nav-desktop-link-indicator" aria-hidden="true"></span>
+          </a>
+        {/each}
+        <a href="/add" class="nav-desktop-cta">+ Add</a>
+      </div>
+    {/if}
 
-    <button
-      class="hamburger"
-      class:hamburger--active={isMenuOpen}
-      onclick={toggleMenu}
-      aria-expanded={isMenuOpen}
-      aria-controls="nav-menu"
-      aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-      type="button"
-    >
-      <span class="hamburger-line" aria-hidden="true"></span>
-      <span class="hamburger-line" aria-hidden="true"></span>
-      <span class="hamburger-line" aria-hidden="true"></span>
-    </button>
+    {#if isMobile}
+      <button
+        class="hamburger"
+        class:hamburger--active={isMenuOpen}
+        onclick={toggleMenu}
+        aria-expanded={isMenuOpen}
+        aria-controls="nav-menu"
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        type="button"
+      >
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+      </button>
+    {/if}
   </div>
 </nav>
 
@@ -255,7 +274,7 @@
 
   /* ─── Hamburger ─── */
   .hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -268,12 +287,6 @@
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     z-index: calc(var(--z-modal) + 1);
-  }
-
-  @media (max-inline-size: 767px) {
-    .hamburger {
-      display: flex;
-    }
   }
 
   .hamburger-line {
