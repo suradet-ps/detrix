@@ -24,7 +24,7 @@
 - **Detail modal** — click any item to open an accessible, keyboard-navigable modal with full details.
 - **Key-protected submission** — secure `/add` route verifies a secret key **server-side** (no client-side secrets).
 - **Notification system** — accessible toast notifications replace `alert()` for all user feedback.
-- **Scroll-reveal animations** — subtle Intersection Observer-based reveal on category sections.
+- **Scroll-reveal animations** — Intersection Observer-based reveal on category sections.
 - **Mobile-first responsive** — optimized for all screen sizes with hamburger navigation.
 - **Dark-mode ready** — CSS custom properties architecture; theme can be toggled via `prefers-color-scheme`.
 - **Fully accessible** — keyboard navigation, focus traps, ARIA attributes, screen-reader support.
@@ -64,12 +64,12 @@ bun install
 Create a `.env` file in the project root:
 
 ```env
-VITE_SUPABASE_URL="https://your-project.supabase.co"
-VITE_SUPABASE_ANON_KEY="your-anon-key"
-VITE_ADD_POST_SECRET_KEY="your-secret-key"
+PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
+PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+SECRET_ADD_POST_KEY="your-secret-key"
 ```
 
-> `VITE_ADD_POST_SECRET_KEY` is only accessed **server-side** in `+page.server.ts` — never exposed to the client.
+> `SECRET_ADD_POST_KEY` is only accessed **server-side** via `$env/static/private` — never exposed to the client.
 
 ### Development
 
@@ -100,11 +100,23 @@ bun run check      # svelte-kit sync + svelte-check (type + Svelte diagnostics)
 src/
 ├── lib/
 │   ├── components/
-│   │   ├── Navbar.svelte              # Responsive nav with hamburger menu
-│   │   ├── PortfolioDetailModal.svelte # Accessible modal with focus trap
-│   │   └── Notification.svelte        # Toast notification system
-│   ├── services/
-│   │   └── portfolio.service.ts       # Data access layer (fetch, create, validate)
+│   │   ├── Navigation.svelte          # Responsive nav with hamburger menu
+│   │   ├── Modal.svelte               # Accessible modal with focus trap
+│   │   ├── Notification.svelte        # Toast notification system
+│   │   ├── Hero.svelte                # Hero section with metrics grid
+│   │   ├── SectionReveal.svelte       # Scroll-reveal animation wrapper
+│   │   ├── EditorialSection.svelte    # Editorial content section shell
+│   │   ├── SignatureSection.svelte    # Branded signature card section
+│   │   ├── ProjectFeatured.svelte     # Featured/flagship project card
+│   │   ├── ProjectCard.svelte         # Project card (clickable -> modal)
+│   │   ├── SpeakerSection.svelte      # Speaker experience grid
+│   │   ├── AcademicSection.svelte     # Academic contributions list
+│   │   ├── InnovationSection.svelte   # Healthcare innovations grid
+│   │   ├── Timeline.svelte            # Career timeline component
+│   │   ├── TestimonialSection.svelte  # Recognition/testimonial grid
+│   │   ├── CTABand.svelte             # Call-to-action band (dark)
+│   │   ├── MetricsGrid.svelte         # Stats/metrics display grid
+│   │   └── Footer.svelte              # Site footer
 │   ├── stores/
 │   │   └── notification.svelte.ts     # Rune-based notification store
 │   ├── styles/
@@ -113,21 +125,24 @@ src/
 │   ├── supabase/
 │   │   └── client.ts                  # Singleton Supabase client (SSR-safe)
 │   ├── types/
-│   │   └── portfolio.ts               # All database models & DTOs
+│   │   └── portfolio.ts               # Database models & types
 │   └── utils/
 │       ├── date.ts                    # Date formatting utilities
-│       ├── focusTrap.ts               # Focus trap Svelte action
-│       └── scrollReveal.ts            # Intersection Observer action
+│       └── focusTrap.ts               # Focus trap Svelte action
 ├── routes/
-│   ├── +layout.svelte                 # App shell (Navbar + Notification)
+│   ├── +layout.svelte                 # App shell (Navigation + Notification + Footer)
+│   ├── +error.svelte                  # Global error page (404, 500, etc.)
 │   ├── +page.svelte                   # Portfolio listing page
-│   ├── +page.ts                       # Server load: fetch + group items
+│   ├── +page.ts                       # Universal load: fetch + group items
 │   ├── add/
 │   │   ├── +page.svelte               # Add-portfolio form
 │   │   └── +page.server.ts            # Server action: secret-key verification + insert
 │   └── api/
-│       └── portfolio/
-│           └── +server.ts             # REST endpoint for portfolio creation
+│       ├── portfolio/
+│       │   └── +server.ts             # REST endpoint for portfolio creation
+│       └── health/
+│           └── +server.ts             # Health check endpoint
+├── hooks.server.ts                    # Security headers, rate limiting, CSRF, logging
 ├── app.html                           # HTML shell
 └── app.d.ts                           # SvelteKit type declarations
 ```
@@ -166,10 +181,14 @@ Key architectural decisions:
 
 ## Security
 
-- **Server-side key verification** — `VITE_ADD_POST_SECRET_KEY` is checked in `+page.server.ts` only
-- **No client-side secrets** — the secret key is never `import.meta.env`-accessed in browser code
+- **Server-side key verification** — `SECRET_ADD_POST_KEY` is checked in `+page.server.ts` and `+server.ts` only, via `$env/static/private`
+- **No client-side secrets** — server-only env vars use `$env/static/private`; never exposed to the client bundle
 - **Supabase anon key** — safe for client use with Row-Level Security; read-only queries in load functions
-- **Environment validation** — `client.ts` throws during build if required vars are missing
+- **Environment validation** — `client.ts` throws at runtime if required vars are missing
+- **CSRF protection** — origin/host validation on all write methods in `hooks.server.ts`
+- **Rate limiting** — IP-based (30 req/min) on all POST/PUT/PATCH/DELETE requests
+- **Security headers** — CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
+- **Input validation** — server-side length limits, category whitelist, date format validation
 
 ---
 

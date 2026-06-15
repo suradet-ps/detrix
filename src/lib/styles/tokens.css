@@ -10,7 +10,6 @@
   --color-surface-soft: #f8fafc;
   --color-surface-strong: #e0e2e6;
   --color-surface-dark: #181d26;
-  --color-surface-dark-elevated: #1d1f25;
   --color-hairline: #dddddd;
 
   /* Text */
@@ -27,15 +26,11 @@
   --color-signature-cream: #f5e9d4;
   --color-signature-peach: #fcab79;
   --color-signature-mint: #a8d8c4;
-  --color-signature-yellow: #f4d35e;
-  --color-signature-mustard: #d9a441;
 
   /* Semantic */
   --color-link: #1b61c9;
-  --color-link-active: #1a3866;
   --color-info: #254fad;
   --color-info-border: #458fff;
-  --color-success: #006400;
   --color-success-border: #39bf45;
 
   /* ─── Typography (DESIGN.md §57-77) ─── */
@@ -84,10 +79,6 @@
   --text-caption-line: 1.35;
   --text-caption-spacing: 0.16px;
 
-  --text-legal: 13.12px;
-  --text-legal-weight: 600;
-  --text-legal-line: 1.2;
-
   /* ─── Spacing (DESIGN.md §86-91) ─── */
   --space-xxs: 4px;
   --space-xs: 8px;
@@ -103,14 +94,10 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 12px;
-  --radius-pill: 9999px;
   --radius-full: 50%;
 
   /* ─── Elevation (DESIGN.md §102-116) ─── */
-  --elevation-flat: none;
-  --elevation-hairline: 0 0 0 1px var(--color-hairline);
   --elevation-button: 0 1px 3px rgba(0, 0, 0, 0.12);
-  --elevation-button-focus: 0 0 0 2px var(--color-info-border);
 
   /* ─── Z-Index ─── */
   --z-base: 1;
