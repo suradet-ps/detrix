@@ -188,30 +188,6 @@
     gap: var(--space-lg);
   }
 
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--space-md) var(--space-lg);
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-    font-size: var(--text-button);
-    font-weight: var(--text-button-weight);
-    line-height: var(--text-button-line);
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-primary {
-    min-block-size: 48px;
-  }
-
-  .btn-primary:focus-visible {
-    outline: 2px solid var(--color-info-border);
-    outline-offset: 2px;
-  }
-
   .identity-content {
     max-inline-size: 640px;
   }

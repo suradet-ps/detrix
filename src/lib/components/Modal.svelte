@@ -2,6 +2,7 @@
   import type { PortfolioItem } from '$lib/types/portfolio';
   import { formatDate } from '$lib/utils/date';
   import { focusTrap } from '$lib/utils/focusTrap';
+  import { lockBodyScroll } from '$lib/utils/bodyLock.svelte';
 
   let { item, onclose }: { item: PortfolioItem; onclose: () => void } = $props();
 
@@ -26,10 +27,7 @@
   }
 
   $effect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return lockBodyScroll();
   });
 </script>
 

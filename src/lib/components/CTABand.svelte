@@ -16,7 +16,7 @@
       <p class="cta-supporting">{supporting}</p>
     {/if}
     <div class="cta-actions">
-      <a href="/add" class="btn-primary">Get in touch</a>
+      <a href="/add" class="btn-on-dark">Get in touch</a>
     </div>
   </div>
 </section>
@@ -71,7 +71,7 @@
     justify-content: center;
   }
 
-  .btn-primary {
+  .btn-on-dark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +90,7 @@
     transition: background-color 0.15s ease;
   }
 
-  .btn-primary:focus-visible {
+  .btn-on-dark:focus-visible {
     outline: 2px solid var(--color-info-border);
     outline-offset: 2px;
   }

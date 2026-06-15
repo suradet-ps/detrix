@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { lockBodyScroll } from '$lib/utils/bodyLock.svelte';
+
   let isMenuOpen = $state(false);
 
   const navLinks = [
@@ -21,13 +23,8 @@
 
   $effect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      return lockBodyScroll();
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   });
 </script>
 

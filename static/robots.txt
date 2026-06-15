@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /add/
+
+Sitemap: https://suradet.dev/sitemap.xml
