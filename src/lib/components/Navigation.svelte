@@ -56,6 +56,7 @@
   ];
 
   let currentPath = $derived($page.url.pathname);
+  let isLoggedIn = $derived(!!$page.data.session);
 
   function isActive(href: string): boolean {
     if (href.startsWith('#')) return false;
@@ -101,7 +102,12 @@
             <span class="nav-desktop-link-indicator" aria-hidden="true"></span>
           </a>
         {/each}
-        <a href="/add" class="nav-desktop-cta">+ Add</a>
+        {#if isLoggedIn}
+          <a href="/add" class="nav-desktop-cta">+ Add</a>
+          <a href="/api/auth/logout" class="nav-desktop-cta nav-desktop-cta--logout">Logout</a>
+        {:else}
+          <a href="/login" class="nav-desktop-cta">Login</a>
+        {/if}
       </div>
     {/if}
 
@@ -160,14 +166,33 @@
         <span class="nav-overlay-link-label">{label}</span>
       </a>
     {/each}
-    <a
-      href="/add"
-      class="nav-overlay-cta"
-      style="--i: {navLinks.length}"
-      onclick={closeMenu}
-    >
-      + Add Portfolio Item
-    </a>
+    {#if isLoggedIn}
+      <a
+        href="/add"
+        class="nav-overlay-cta"
+        style="--i: {navLinks.length}"
+        onclick={closeMenu}
+      >
+        + Add Portfolio Item
+      </a>
+      <a
+        href="/api/auth/logout"
+        class="nav-overlay-cta"
+        style="--i: {navLinks.length + 1}"
+        onclick={closeMenu}
+      >
+        Logout
+      </a>
+    {:else}
+      <a
+        href="/login"
+        class="nav-overlay-cta"
+        style="--i: {navLinks.length}"
+        onclick={closeMenu}
+      >
+        Login
+      </a>
+    {/if}
   </div>
 </div>
 
@@ -313,6 +338,18 @@
   .nav-desktop-cta:focus-visible {
     outline: 2px solid var(--color-info-border);
     outline-offset: 2px;
+  }
+
+  .nav-desktop-cta--logout {
+    background-color: transparent;
+    color: var(--color-muted);
+    border: 1px solid var(--color-hairline);
+  }
+
+  .nav-desktop-cta--logout:hover {
+    background-color: var(--color-surface-soft);
+    color: var(--color-ink);
+    transform: translateY(-1px);
   }
 
   /* ─── Hamburger ─── */

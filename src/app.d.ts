@@ -1,5 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
+import type { SupabaseClient, Session } from '@supabase/supabase-js';
+
 declare global {
   namespace App {
     interface Error {
@@ -8,11 +10,12 @@ declare global {
     }
 
     interface Locals {
-      // Server-side locals (if any)
+      supabase: SupabaseClient;
+      session: Session | null;
     }
 
     interface PageData {
-      // Per-page data type
+      session: Session | null;
     }
 
     interface PageState {

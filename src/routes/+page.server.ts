@@ -1,10 +1,10 @@
-import { getSupabase } from '$lib/supabase/client';
+import { getSupabaseServer } from '$lib/supabase/server-public';
 import type { PortfolioItem, EditorialData, TimelineEntry } from '$lib/types/portfolio';
 import type { PageServerLoad } from './$types';
 import { PORTFOLIO_CATEGORIES } from '$lib/constants/categories';
 
 export const load: PageServerLoad = async () => {
-  const supabase = getSupabase();
+  const supabase = getSupabaseServer();
 
   const { data, error } = await supabase
     .from('portfolio_items')

@@ -14,8 +14,7 @@
     description: '',
     category: '',
     start_date: '',
-    end_date: '',
-    secret_key: ''
+    end_date: ''
   });
 
   let validationErrors = $state<Record<string, string>>({});
@@ -35,25 +34,8 @@
       errors.start_date = 'กรุณากรอกวันที่';
     }
 
-    if (!formData.secret_key.trim()) {
-      errors.secret_key = 'กรุณากรอกรหัสสำหรับบันทึกผลงาน';
-    }
-
     validationErrors = errors;
     return Object.keys(errors).length === 0;
-  }
-
-  async function authenticate(secretKey: string): Promise<boolean> {
-    try {
-      const response = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ secret_key: secretKey })
-      });
-      return response.ok;
-    } catch {
-      return false;
-    }
   }
 
   function handleInput(field: keyof typeof formData, value: string): void {
@@ -79,13 +61,6 @@
         validationErrors = {};
 
         if (!validate()) {
-          isSubmitting = false;
-          return;
-        }
-
-        const isAuthenticated = await authenticate(formData.secret_key);
-        if (!isAuthenticated) {
-          notify('รหัสสำหรับบันทึกผลงานไม่ถูกต้อง!', 'error');
           isSubmitting = false;
           return;
         }
@@ -207,27 +182,6 @@
           bind:value={formData.end_date}
           oninput={(e) => handleInput('end_date', (e.target as HTMLInputElement).value)}
         />
-      </div>
-
-      <div class="form-group">
-        <label for="secret_key">
-          รหัสสำหรับบันทึกผลงาน
-          <span class="required" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="password"
-          id="secret_key"
-          name="secret_key"
-          autocomplete="off"
-          bind:value={formData.secret_key}
-          oninput={(e) => handleInput('secret_key', (e.target as HTMLInputElement).value)}
-          aria-invalid={validationErrors.secret_key ? 'true' : undefined}
-          aria-describedby={validationErrors.secret_key ? 'secret-key-error' : undefined}
-          required
-        />
-        {#if validationErrors.secret_key}
-          <p id="secret-key-error" class="field-error" role="alert">{validationErrors.secret_key}</p>
-        {/if}
       </div>
 
       <button type="submit" class="submit-btn" disabled={isSubmitting}>

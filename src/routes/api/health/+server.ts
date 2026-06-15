@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { building } from '$app/environment';
-import { getSupabase } from '$lib/supabase/client';
+import { getSupabaseServer } from '$lib/supabase/server-public';
 
 export const GET = async () => {
   const start = Date.now();
@@ -13,7 +13,7 @@ export const GET = async () => {
 
   if (!building) {
     try {
-      const supabase = getSupabase();
+      const supabase = getSupabaseServer();
       const { error } = await supabase.from('portfolio_items').select('id').limit(1);
       if (error) {
         response.status = 'degraded';

@@ -1,16 +1,17 @@
-import { getSupabase } from '$lib/supabase/client';
-import { json, type RequestEvent } from '@sveltejs/kit';
+import { redirect, json } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { validatePortfolioInput } from '$lib/server/validation';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
+  if (!locals.session) {
+    throw redirect(302, '/login');
+  }
   return {};
 };
 
 export const actions: Actions = {
-  create: async ({ request, cookies }: RequestEvent) => {
-    const session = cookies.get('portfolio_session');
-    if (!session) {
+  create: async ({ request, locals }) => {
+    if (!locals.session) {
       return json({ success: false, error: 'กรุณาเข้าสู่ระบบก่อนบันทึกผลงาน' }, { status: 401 });
     }
 
@@ -32,9 +33,8 @@ export const actions: Actions = {
     }
 
     const { data } = validation;
-    const supabase = getSupabase();
 
-    const { error: dbError } = await supabase.from('portfolio_items').insert([
+    const { error: dbError } = await locals.supabase.from('portfolio_items').insert([
       {
         title: data.title,
         description: data.description,

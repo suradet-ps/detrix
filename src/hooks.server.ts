@@ -1,4 +1,5 @@
 import type { Handle, HandleServerError } from '@sveltejs/kit';
+import { createSupabaseServerClient } from '$lib/supabase/server';
 
 const SECURITY_HEADERS: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
@@ -64,6 +65,11 @@ function log(level: 'info' | 'error', message: string, meta?: Record<string, unk
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+  event.locals.supabase = createSupabaseServerClient(event.cookies);
+
+  const { data: { session } } = await event.locals.supabase.auth.getSession();
+  event.locals.session = session;
+
   const start = Date.now();
   const method = event.request.method;
   const url = event.url.pathname;

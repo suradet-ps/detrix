@@ -1,11 +1,10 @@
-import { createBrowserClient } from '@supabase/ssr';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { building, version } from '$app/environment';
 import { env as publicEnv } from '$env/dynamic/public';
-import type { SupabaseClient } from '@supabase/supabase-js';
 
 let client: SupabaseClient | null = null;
 
-export function getSupabase(): SupabaseClient {
+export function getSupabaseServer(): SupabaseClient {
   if (client) return client;
 
   const env = publicEnv as Record<string, string>;
@@ -16,7 +15,7 @@ export function getSupabase(): SupabaseClient {
     throw new Error('Missing Supabase environment variables (PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)');
   }
 
-  client = createBrowserClient(url ?? '', key ?? '', {
+  client = createClient(url ?? '', key ?? '', {
     global: {
       headers: {
         'X-Client-Info': `detrix@${version}`
