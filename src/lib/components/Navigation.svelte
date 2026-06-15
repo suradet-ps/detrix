@@ -4,6 +4,11 @@
 
   let isMenuOpen = $state(false);
   let isMobile = $state(false);
+  let isScrolled = $state(false);
+  let isHidden = $state(false);
+
+  let lastScrollY = 0;
+  const SCROLL_THRESHOLD = 10;
 
   $effect(() => {
     const mql = window.matchMedia('(max-width: 767px)');
@@ -11,6 +16,34 @@
     const handler = (e: MediaQueryListEvent) => { isMobile = e.matches; };
     mql.addEventListener('change', handler);
     return () => mql.removeEventListener('change', handler);
+  });
+
+  $effect(() => {
+    function handleScroll(): void {
+      const currentScrollY = window.scrollY;
+
+      isScrolled = currentScrollY > 10;
+
+      const diff = currentScrollY - lastScrollY;
+
+      if (Math.abs(diff) < SCROLL_THRESHOLD) {
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY < 64) {
+        isHidden = false;
+      } else if (diff > 0) {
+        isHidden = true;
+      } else {
+        isHidden = false;
+      }
+
+      lastScrollY = currentScrollY;
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   });
 
   const navLinks = [
@@ -50,7 +83,7 @@
   });
 </script>
 
-<nav class="top-nav" aria-label="Main navigation">
+<nav class="top-nav" class:nav--scrolled={isScrolled} class:nav--hidden={isHidden} aria-label="Main navigation">
   <div class="nav-inner">
     <a href="/" class="nav-brand" onclick={closeMenu} aria-label="Home">
       <span class="brand-mark" aria-hidden="true">SP</span>
@@ -149,6 +182,16 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-hairline);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease;
+  }
+
+  .top-nav.nav--scrolled {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .top-nav.nav--hidden {
+    transform: translateY(-100%);
   }
 
   .nav-inner {
@@ -482,6 +525,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .top-nav {
+      transition: none;
+    }
+
     .nav-overlay-bg,
     .nav-overlay-link,
     .nav-overlay-cta {
