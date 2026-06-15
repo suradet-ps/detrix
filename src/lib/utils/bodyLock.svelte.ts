@@ -1,4 +1,4 @@
-let lockCount = $state(0);
+let lockCount = 0;
 
 export function lockBodyScroll(): () => void {
   lockCount++;
