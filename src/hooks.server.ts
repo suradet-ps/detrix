@@ -3,7 +3,6 @@ import type { Handle, HandleServerError } from '@sveltejs/kit';
 const SECURITY_HEADERS: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
 };
@@ -14,7 +13,22 @@ function addSecurityHeaders(response: Response): void {
   }
 }
 
-const requestCounts = new Map<string, { count: number; resetAt: number }>();
+interface RateLimitRecord {
+  count: number;
+  resetAt: number;
+}
+
+const requestCounts = new Map<string, RateLimitRecord>();
+const CLEANUP_INTERVAL_MS = 60_000;
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, record] of requestCounts) {
+    if (now > record.resetAt) {
+      requestCounts.delete(ip);
+    }
+  }
+}, CLEANUP_INTERVAL_MS);
 
 function rateLimit(ip: string, maxRequests = 30, windowMs = 60000): boolean {
   const now = Date.now();
@@ -35,6 +49,20 @@ function rateLimit(ip: string, maxRequests = 30, windowMs = 60000): boolean {
 
 const WRITE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
+function log(level: 'info' | 'error', message: string, meta?: Record<string, unknown>): void {
+  const entry = {
+    timestamp: new Date().toISOString(),
+    level,
+    message,
+    ...meta
+  };
+  if (level === 'error') {
+    console.error(JSON.stringify(entry));
+  } else {
+    console.log(JSON.stringify(entry));
+  }
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
   const start = Date.now();
   const method = event.request.method;
@@ -43,25 +71,40 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   if (WRITE_METHODS.has(method)) {
     const origin = event.request.headers.get('origin');
+    const referer = event.request.headers.get('referer');
     const host = event.request.headers.get('host');
-    if (origin && host) {
-      try {
-        const originHost = new URL(origin).host;
-        if (originHost !== host) {
-          return new Response(JSON.stringify({ error: 'Cross-site request forbidden' }), {
-            status: 403,
+
+    if (host) {
+      let requestHost: string | null = null;
+
+      if (origin) {
+        try {
+          requestHost = new URL(origin).host;
+        } catch {
+          return new Response(JSON.stringify({ error: 'Invalid origin' }), {
+            status: 400,
             headers: { 'Content-Type': 'application/json' }
           });
         }
-      } catch {
-        return new Response(JSON.stringify({ error: 'Invalid origin' }), {
-          status: 400,
+      } else if (referer) {
+        try {
+          requestHost = new URL(referer).host;
+        } catch {
+          // Referer is optional, don't block on invalid referer
+        }
+      }
+
+      if (requestHost && requestHost !== host) {
+        log('info', 'CSRF rejection', { ip, url, origin: requestHost });
+        return new Response(JSON.stringify({ error: 'Cross-site request forbidden' }), {
+          status: 403,
           headers: { 'Content-Type': 'application/json' }
         });
       }
     }
 
     if (!rateLimit(ip)) {
+      log('info', 'Rate limit exceeded', { ip, url });
       return new Response(JSON.stringify({ error: 'Too many requests. Please try again later.' }), {
         status: 429,
         headers: { 'Content-Type': 'application/json', 'Retry-After': '60' }
@@ -74,13 +117,13 @@ export const handle: Handle = async ({ event, resolve }) => {
   addSecurityHeaders(response);
 
   const duration = Date.now() - start;
-  console.log(`${method} ${url} ${response.status} ${duration}ms - ${ip}`);
+  log('info', 'request', { method, url, status: response.status, duration, ip });
 
   return response;
 };
 
 export const handleError: HandleServerError = async ({ error, event }) => {
-  console.error('Unhandled server error:', {
+  log('error', 'Unhandled server error', {
     url: event.url.pathname,
     method: event.request.method,
     message: error instanceof Error ? error.message : String(error),

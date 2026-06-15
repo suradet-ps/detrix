@@ -1,8 +1,7 @@
 const SITE_URL = 'https://suradet.dev';
 
 const routes = [
-  { path: '/', changefreq: 'weekly', priority: '1.0' },
-  { path: '/add', changefreq: 'monthly', priority: '0.3' }
+  { path: '/', changefreq: 'weekly', priority: '1.0' }
 ];
 
 export const GET = async () => {

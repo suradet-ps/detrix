@@ -1,13 +1,14 @@
 import { getSupabase } from '$lib/supabase/client';
 import type { PortfolioItem, EditorialData, TimelineEntry } from '$lib/types/portfolio';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
+import { PORTFOLIO_CATEGORIES } from '$lib/constants/categories';
 
-export const load: PageLoad = async () => {
+export const load: PageServerLoad = async () => {
   const supabase = getSupabase();
 
   const { data, error } = await supabase
     .from('portfolio_items')
-    .select('*')
+    .select('id, title, description, category, start_date, end_date')
     .order('start_date', { ascending: false })
     .limit(200);
 
@@ -20,19 +21,18 @@ export const load: PageLoad = async () => {
 
   const items = (data ?? []) as PortfolioItem[];
 
-  const speakerItems = items.filter((i) => i.category === 'วิทยากร');
-  const academicItems = items.filter((i) => i.category === 'ผลงานวิชาการ');
-  const innovationItems = items.filter((i) => i.category === 'นวัตกรรม');
-  const conferenceItems = items.filter((i) => i.category === 'การประชุม/อบรม');
+  const speakerItems = items.filter((i) => i.category === PORTFOLIO_CATEGORIES.SPEAKER);
+  const academicItems = items.filter((i) => i.category === PORTFOLIO_CATEGORIES.ACADEMIC);
+  const innovationItems = items.filter((i) => i.category === PORTFOLIO_CATEGORIES.INNOVATION);
 
   const allTimeline: TimelineEntry[] = items.map((item) => ({
     id: item.id,
     title: item.title,
     date: item.start_date,
     category: item.category,
-    type: item.category === 'วิทยากร' ? 'speaker'
-      : item.category === 'ผลงานวิชาการ' ? 'academic'
-      : item.category === 'นวัตกรรม' ? 'innovation'
+    type: item.category === PORTFOLIO_CATEGORIES.SPEAKER ? 'speaker'
+      : item.category === PORTFOLIO_CATEGORIES.ACADEMIC ? 'academic'
+      : item.category === PORTFOLIO_CATEGORIES.INNOVATION ? 'innovation'
       : 'conference' as const
   }));
 
@@ -43,16 +43,11 @@ export const load: PageLoad = async () => {
     speakerItems,
     academicItems,
     innovationItems,
-    conferenceItems,
     flagshipProject,
     metrics: {
       academicWorks: academicItems.length,
       speakerSessions: speakerItems.length,
-      innovations: innovationItems.length,
-      professionalsReached: Math.max(
-        academicItems.length + speakerItems.length + innovationItems.length + conferenceItems.length,
-        100
-      )
+      innovations: innovationItems.length
     },
     allTimeline
   };

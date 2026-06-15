@@ -3,8 +3,9 @@
   import { notify } from '$lib/stores/notification.svelte';
   import { goto } from '$app/navigation';
   import type { PageProps } from './$types';
+  import { PORTFOLIO_CATEGORIES } from '$lib/constants/categories';
 
-  let { form, data }: PageProps = $props();
+  let { data }: PageProps = $props();
 
   let isSubmitting = $state(false);
 
@@ -42,6 +43,19 @@
     return Object.keys(errors).length === 0;
   }
 
+  async function authenticate(secretKey: string): Promise<boolean> {
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret_key: secretKey })
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  }
+
   function handleInput(field: keyof typeof formData, value: string): void {
     formData[field] = value;
     if (validationErrors[field]) {
@@ -64,27 +78,32 @@
         isSubmitting = true;
         validationErrors = {};
 
-        const fd = new FormData(formElement);
-        const raw = Object.fromEntries(fd) as Record<string, string>;
-        const clientData = {
-          title: raw.title ?? '',
-          description: raw.description ?? '',
-          category: raw.category ?? '',
-          start_date: raw.start_date ?? '',
-          end_date: raw.end_date ?? '',
-          secret_key: raw.secret_key ?? ''
-        };
-
         if (!validate()) {
           isSubmitting = false;
           return;
         }
 
+        const isAuthenticated = await authenticate(formData.secret_key);
+        if (!isAuthenticated) {
+          notify('รหัสสำหรับบันทึกผลงานไม่ถูกต้อง!', 'error');
+          isSubmitting = false;
+          return;
+        }
+
         try {
+          const submitData = {
+            title: formData.title,
+            description: formData.description,
+            category: formData.category,
+            start_date: formData.start_date,
+            end_date: formData.end_date
+          };
+
           const response = await fetch(formElement.action, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(clientData)
+            credentials: 'same-origin',
+            body: JSON.stringify(submitData)
           });
 
           const result = await response.json();
@@ -149,10 +168,10 @@
           required
         >
           <option disabled value="">กรุณาเลือกประเภท</option>
-          <option value="วิทยากร">วิทยากร</option>
-          <option value="ผลงานวิชาการ">ผลงานวิชาการ</option>
-          <option value="การประชุม/อบรม">การประชุม/อบรม</option>
-          <option value="นวัตกรรม">นวัตกรรม</option>
+          <option value={PORTFOLIO_CATEGORIES.SPEAKER}>{PORTFOLIO_CATEGORIES.SPEAKER}</option>
+          <option value={PORTFOLIO_CATEGORIES.ACADEMIC}>{PORTFOLIO_CATEGORIES.ACADEMIC}</option>
+          <option value={PORTFOLIO_CATEGORIES.CONFERENCE}>{PORTFOLIO_CATEGORIES.CONFERENCE}</option>
+          <option value={PORTFOLIO_CATEGORIES.INNOVATION}>{PORTFOLIO_CATEGORIES.INNOVATION}</option>
         </select>
         {#if validationErrors.category}
           <p id="category-error" class="field-error" role="alert">{validationErrors.category}</p>

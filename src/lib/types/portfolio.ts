@@ -21,13 +21,11 @@ export interface EditorialData {
   speakerItems: PortfolioItem[];
   academicItems: PortfolioItem[];
   innovationItems: PortfolioItem[];
-  conferenceItems: PortfolioItem[];
   flagshipProject: PortfolioItem | null;
   metrics: {
     academicWorks: number;
     speakerSessions: number;
     innovations: number;
-    professionalsReached: number;
   };
   allTimeline: TimelineEntry[];
 }

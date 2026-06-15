@@ -5,20 +5,10 @@ import { getSupabase } from '$lib/supabase/client';
 export const GET = async () => {
   const start = Date.now();
 
-  const uptime = typeof process !== 'undefined' && typeof process.uptime === 'function'
-    ? process.uptime()
-    : null;
-
-  const memory = typeof process !== 'undefined' && process.memoryUsage
-    ? process.memoryUsage().heapUsed
-    : null;
-
   const status = building ? 'building' : 'ok';
   const response: Record<string, unknown> = {
     status,
-    timestamp: new Date().toISOString(),
-    uptime,
-    memory
+    timestamp: new Date().toISOString()
   };
 
   if (!building) {
