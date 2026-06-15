@@ -1,27 +1,17 @@
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 
-const SECURITY_HEADERS = {
+const SECURITY_HEADERS: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-  'Content-Security-Policy': [
-    "default-src 'self'",
-    "script-src 'self'",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com",
-    "img-src 'self' data:",
-    "connect-src 'self' https://*.supabase.co",
-    "frame-ancestors 'none'"
-  ].join('; ')
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
 };
 
-function addSecurityHeaders(response: Response): Response {
+function addSecurityHeaders(response: Response): void {
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
     response.headers.set(key, value);
   }
-  return response;
 }
 
 const requestCounts = new Map<string, { count: number; resetAt: number }>();
