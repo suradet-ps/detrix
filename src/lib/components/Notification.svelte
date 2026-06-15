@@ -71,10 +71,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    inline-size: 28px;
-    block-size: 28px;
-    min-inline-size: 44px;
-    min-block-size: 44px;
+    inline-size: 44px;
+    block-size: 44px;
     background: none;
     border: none;
     color: var(--color-muted);

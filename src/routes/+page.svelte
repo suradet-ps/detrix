@@ -282,5 +282,9 @@
     .project-cell--offset {
       padding-block-start: 0;
     }
+
+    .recognition-card {
+      padding: var(--space-lg);
+    }
   }
 </style>

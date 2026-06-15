@@ -45,6 +45,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    min-inline-size: 0;
   }
 
   .academic-title {

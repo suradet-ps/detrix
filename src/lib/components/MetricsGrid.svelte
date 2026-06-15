@@ -69,4 +69,14 @@
       hyphens: auto;
     }
   }
+
+  @media (max-inline-size: 480px) {
+    .metrics-grid {
+      gap: var(--space-md);
+    }
+
+    .metric-label {
+      font-size: 12px;
+    }
+  }
 </style>

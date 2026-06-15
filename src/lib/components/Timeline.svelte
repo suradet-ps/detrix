@@ -47,7 +47,7 @@
   .timeline::before {
     content: '';
     position: absolute;
-    inset-inline-start: 7px;
+    inset-inline-start: calc(var(--space-xxs) + 1px);
     inset-block-start: 0;
     inset-block-end: 0;
     inline-size: 2px;

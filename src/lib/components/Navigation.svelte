@@ -187,9 +187,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: var(--space-xl);
+      gap: var(--space-sm);
       background-color: var(--color-canvas);
       z-index: var(--z-modal);
+      overflow-y: auto;
+      padding-block: var(--space-xxl);
     }
 
     .nav-menu--open {
@@ -197,7 +199,10 @@
     }
 
     .nav-link {
-      padding: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      min-block-size: 48px;
+      display: flex;
+      align-items: center;
       font-size: var(--text-title-md);
       font-weight: var(--text-title-md-weight);
     }

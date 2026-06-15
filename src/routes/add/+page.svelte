@@ -267,6 +267,7 @@
   .form-group textarea,
   .form-group select {
     inline-size: 100%;
+    min-block-size: 48px;
     padding: var(--space-sm) var(--space-md);
     background-color: var(--color-canvas);
     border: 1px solid var(--color-hairline);

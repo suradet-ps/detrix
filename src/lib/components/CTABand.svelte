@@ -74,7 +74,9 @@
   .btn-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding: var(--space-md) var(--space-lg);
+    min-block-size: 48px;
     background-color: var(--color-canvas);
     color: var(--color-ink);
     font-size: var(--text-button);
