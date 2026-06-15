@@ -160,14 +160,14 @@
 
   /* ─── Desktop Links ─── */
   .nav-desktop-links {
-    display: none;
+    display: flex;
     align-items: center;
     gap: var(--space-xs);
   }
 
-  @media (min-inline-size: 768px) {
+  @media (max-inline-size: 767px) {
     .nav-desktop-links {
-      display: flex;
+      display: none;
     }
   }
 
