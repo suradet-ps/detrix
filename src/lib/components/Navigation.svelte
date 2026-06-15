@@ -18,6 +18,17 @@
   function closeMenu(): void {
     isMenuOpen = false;
   }
+
+  $effect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  });
 </script>
 
 <nav class="top-nav" aria-label="Main navigation">
@@ -46,6 +57,7 @@
       class="nav-menu"
       class:nav-menu--open={isMenuOpen}
       role="list"
+      aria-hidden={!isMenuOpen}
     >
       {#each navLinks as { href, label }}
         <a
@@ -106,13 +118,15 @@
     display: none;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 5px;
-    inline-size: 32px;
-    block-size: 32px;
+    min-inline-size: 44px;
+    min-block-size: 44px;
     background: transparent;
     border: none;
     padding: 0;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .hamburger span {
@@ -131,6 +145,12 @@
 
   .hamburger--active span:last-child {
     transform: rotate(-45deg) translate(2px, -5px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hamburger span {
+      transition: none;
+    }
   }
 
   .nav-menu {

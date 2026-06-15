@@ -57,11 +57,16 @@
   @media (max-inline-size: 768px) {
     .metrics-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-xl);
+      gap: var(--space-lg);
     }
 
     .metric-value {
       font-size: var(--text-title-lg);
+    }
+
+    .metric-label {
+      word-break: break-word;
+      hyphens: auto;
     }
   }
 </style>

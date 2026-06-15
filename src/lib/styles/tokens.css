@@ -121,5 +121,8 @@
 
   /* ─── Container ─── */
   --container-max: 1280px;
-  --container-gutter: var(--space-xxl);
+  --container-gutter: clamp(var(--space-md), 4vw, var(--space-xxl));
+
+  /* ─── Responsive Tokens ─── */
+  --section-padding: clamp(var(--space-xxl), 8vw, var(--space-section));
 }

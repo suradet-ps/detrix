@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PortfolioItem } from '$lib/types/portfolio';
   import { formatDate } from '$lib/utils/date';
+  import { focusTrap } from '$lib/utils/focusTrap';
 
   let { item, onclose }: { item: PortfolioItem; onclose: () => void } = $props();
 
@@ -44,7 +45,7 @@
   tabindex="-1"
   bind:this={modalRef}
 >
-  <div class="modal-content">
+  <div class="modal-content" use:focusTrap>
     <button
       class="modal-close"
       onclick={onclose}
@@ -86,28 +87,29 @@
   .modal-content {
     background-color: var(--color-canvas);
     border-radius: var(--radius-lg);
-    padding: var(--space-xxl);
+    padding: var(--space-xl);
     max-inline-size: 640px;
-    inline-size: min(90%, 640px);
+    inline-size: min(92%, 640px);
     position: relative;
-    max-block-size: 85vh;
+    max-block-size: 90vh;
     overflow-y: auto;
   }
 
   .modal-close {
     position: absolute;
-    inset-block-start: var(--space-lg);
-    inset-inline-end: var(--space-lg);
+    inset-block-start: var(--space-md);
+    inset-inline-end: var(--space-md);
     background: none;
     border: none;
     color: var(--color-muted);
     cursor: pointer;
-    padding: var(--space-xxs);
     border-radius: var(--radius-sm);
     transition: color 0.15s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-inline-size: 44px;
+    min-block-size: 44px;
   }
 
   .modal-title {
@@ -154,5 +156,16 @@
   .modal-description--empty {
     color: var(--color-muted);
     font-style: italic;
+  }
+
+  @media (max-inline-size: 480px) {
+    .modal-content {
+      padding: var(--space-lg);
+      inline-size: min(96%, 640px);
+    }
+
+    .modal-title {
+      font-size: var(--text-title-md);
+    }
   }
 </style>

@@ -56,9 +56,16 @@
 
   .timeline-item {
     display: flex;
-    gap: var(--space-xl);
-    padding-block-end: var(--space-xl);
+    gap: var(--space-md);
+    padding-block-end: var(--space-lg);
     position: relative;
+  }
+
+  @media (min-inline-size: 768px) {
+    .timeline-item {
+      gap: var(--space-xl);
+      padding-block-end: var(--space-xl);
+    }
   }
 
   .timeline-dot {

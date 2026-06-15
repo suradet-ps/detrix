@@ -228,7 +228,13 @@
     background-color: var(--color-canvas);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-lg);
-    padding: var(--space-xxl);
+    padding: var(--space-xl);
+  }
+
+  @media (max-inline-size: 480px) {
+    .add-card {
+      padding: var(--space-lg);
+    }
   }
 
   .add-heading {
@@ -308,6 +314,7 @@
     font-weight: var(--text-button-weight);
     cursor: pointer;
     transition: background-color 0.15s ease;
+    min-block-size: 48px;
   }
 
   .submit-btn:disabled {

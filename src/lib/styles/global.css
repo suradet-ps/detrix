@@ -8,6 +8,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-block-start: 80px;
 }
 
 body {
@@ -29,13 +30,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: var(--text-display-xl);
+  font-size: clamp(2rem, 5.5vw, var(--text-display-xl));
   font-weight: var(--text-display-xl-weight);
   line-height: var(--text-display-xl-line);
 }
 
 h2 {
-  font-size: var(--text-display-md);
+  font-size: clamp(1.5rem, 4vw, var(--text-display-md));
   font-weight: var(--text-display-md-weight);
   line-height: var(--text-display-md-line);
 }
@@ -79,6 +80,24 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--color-info-border);
   outline-offset: 1px;
+}
+
+.skip-to-content {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-sm);
+  z-index: var(--z-modal);
+  font-size: var(--text-body-md);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  inset-block-start: var(--space-sm);
 }
 
 .visually-hidden {

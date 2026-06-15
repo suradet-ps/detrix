@@ -27,7 +27,7 @@
 <style>
   .hero-band {
     background-color: var(--color-canvas);
-    padding-block: var(--space-section);
+    padding-block: var(--section-padding);
   }
 
   .hero-content {
@@ -47,7 +47,7 @@
   }
 
   .hero-headline {
-    font-size: var(--text-display-lg);
+    font-size: clamp(1.75rem, 5vw, var(--text-display-lg));
     font-weight: var(--text-display-lg-weight);
     line-height: var(--text-display-lg-line);
     color: var(--color-ink);
@@ -57,7 +57,7 @@
   }
 
   .hero-subhead {
-    font-size: var(--text-title-md);
+    font-size: clamp(1rem, 2.5vw, var(--text-title-md));
     font-weight: var(--text-title-md-weight);
     line-height: var(--text-title-md-line);
     color: var(--color-body);
@@ -123,25 +123,15 @@
   }
 
   @media (max-inline-size: 768px) {
-    .hero-band {
-      padding-block: var(--space-xxl);
-    }
-
-    .hero-headline {
-      font-size: var(--text-display-md);
-    }
-
-    .hero-subhead {
-      font-size: var(--text-body-md);
-    }
-
     .hero-actions {
       flex-direction: column;
-      align-items: center;
+      align-items: stretch;
     }
 
-    .hero-overline {
-      font-size: var(--text-body-md);
+    .btn-primary,
+    .btn-secondary {
+      text-align: center;
+      justify-content: center;
     }
   }
 </style>

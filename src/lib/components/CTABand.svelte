@@ -24,7 +24,7 @@
 <style>
   .cta-band {
     background-color: var(--color-surface-dark);
-    padding-block: var(--space-section);
+    padding-block: var(--section-padding);
   }
 
   .cta-inner {
@@ -45,7 +45,7 @@
   }
 
   .cta-headline {
-    font-size: var(--text-display-md);
+    font-size: clamp(1.5rem, 4vw, var(--text-display-md));
     font-weight: var(--text-display-md-weight);
     line-height: var(--text-display-md-line);
     color: var(--color-on-primary);
@@ -55,7 +55,7 @@
   }
 
   .cta-supporting {
-    font-size: var(--text-title-md);
+    font-size: clamp(1rem, 2.5vw, var(--text-title-md));
     font-weight: var(--text-title-md-weight);
     line-height: var(--text-title-md-line);
     color: var(--color-on-primary);

@@ -203,6 +203,10 @@
     cursor: pointer;
   }
 
+  .btn-primary {
+    min-block-size: 48px;
+  }
+
   .btn-primary:focus-visible {
     outline: 2px solid var(--color-info-border);
     outline-offset: 2px;
@@ -213,7 +217,7 @@
   }
 
   .identity-text {
-    font-size: var(--text-title-md);
+    font-size: clamp(1rem, 2.5vw, var(--text-title-md));
     font-weight: var(--text-title-md-weight);
     line-height: var(--text-title-md-line);
     opacity: 0.9;
@@ -251,7 +255,7 @@
   }
 
   .recognition-stat {
-    font-size: var(--text-display-md);
+    font-size: clamp(1.5rem, 4vw, var(--text-display-md));
     font-weight: var(--text-display-md-weight);
     line-height: var(--text-display-md-line);
     color: var(--color-ink);
@@ -273,6 +277,10 @@
   @media (max-inline-size: 768px) {
     .projects-grid {
       grid-template-columns: 1fr;
+    }
+
+    .project-cell--offset {
+      padding-block-start: 0;
     }
   }
 </style>

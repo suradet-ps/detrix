@@ -34,7 +34,7 @@
 
 <style>
   .signature-section {
-    padding-block: var(--space-section);
+    padding-block: var(--section-padding);
   }
 
   .surface-coral {
@@ -78,7 +78,7 @@
   }
 
   .section-headline {
-    font-size: var(--text-display-md);
+    font-size: clamp(1.5rem, 4vw, var(--text-display-md));
     font-weight: var(--text-display-md-weight);
     line-height: var(--text-display-md-line);
     margin-block-end: var(--space-lg);
@@ -92,7 +92,7 @@
   }
 
   .section-supporting {
-    font-size: var(--text-title-md);
+    font-size: clamp(1rem, 2.5vw, var(--text-title-md));
     font-weight: var(--text-title-md-weight);
     line-height: var(--text-title-md-line);
     opacity: 0.85;
