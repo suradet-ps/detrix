@@ -8,7 +8,8 @@ export const load: PageLoad = async () => {
   const { data, error } = await supabase
     .from('portfolio_items')
     .select('*')
-    .order('start_date', { ascending: false });
+    .order('start_date', { ascending: false })
+    .limit(200);
 
   if (error) {
     return {
