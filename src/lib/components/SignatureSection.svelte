@@ -105,4 +105,18 @@
   .surface-forest .section-supporting {
     color: var(--color-on-primary);
   }
+
+  @media (max-inline-size: 768px) {
+    .signature-section {
+      padding-block: clamp(var(--space-xxl), 6vw, var(--space-section));
+    }
+
+    .section-headline {
+      margin-block-end: var(--space-md);
+    }
+
+    .section-supporting {
+      margin-block-end: var(--space-xl);
+    }
+  }
 </style>

@@ -52,7 +52,7 @@
   }
 </script>
 
-<main class="add-page">
+<div class="add-page">
   <div class="add-card">
     <h2 class="add-heading">เพิ่มผลงานใหม่</h2>
 
@@ -214,7 +214,7 @@
       </button>
     </form>
   </div>
-</main>
+</div>
 
 <style>
   .add-page {
@@ -234,6 +234,11 @@
   @media (max-inline-size: 480px) {
     .add-card {
       padding: var(--space-lg);
+    }
+
+    .add-heading {
+      font-size: var(--text-title-lg);
+      margin-block-end: var(--space-xl);
     }
   }
 

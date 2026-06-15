@@ -61,4 +61,11 @@
     line-height: var(--text-body-md-line);
     color: var(--color-body);
   }
+
+  @media (max-inline-size: 768px) {
+    .academic-item {
+      padding: var(--space-md);
+      gap: var(--space-md);
+    }
+  }
 </style>

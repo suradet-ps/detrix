@@ -94,4 +94,10 @@
     outline: 2px solid var(--color-info-border);
     outline-offset: 2px;
   }
+
+  @media (max-inline-size: 768px) {
+    .cta-band {
+      padding-block: clamp(var(--space-xxl), 6vw, var(--space-section));
+    }
+  }
 </style>

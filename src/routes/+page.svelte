@@ -286,5 +286,9 @@
     .recognition-card {
       padding: var(--space-lg);
     }
+
+    .state-error {
+      padding: var(--space-xl);
+    }
   }
 </style>

@@ -69,4 +69,10 @@
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-sm);
   }
+
+  @media (max-inline-size: 768px) {
+    .project-card {
+      padding: var(--space-lg);
+    }
+  }
 </style>

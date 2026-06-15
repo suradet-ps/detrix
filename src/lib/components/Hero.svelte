@@ -136,6 +136,7 @@
     .btn-secondary {
       text-align: center;
       justify-content: center;
+      inline-size: 100%;
     }
   }
 </style>

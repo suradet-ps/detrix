@@ -53,4 +53,14 @@
     margin-block-end: var(--space-xxl);
     max-inline-size: 640px;
   }
+
+  @media (max-inline-size: 768px) {
+    .editorial-section {
+      padding-block: clamp(var(--space-xxl), 6vw, var(--space-section));
+    }
+
+    .section-label {
+      margin-block-end: var(--space-xl);
+    }
+  }
 </style>

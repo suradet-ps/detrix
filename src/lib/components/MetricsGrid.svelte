@@ -61,10 +61,11 @@
     }
 
     .metric-value {
-      font-size: var(--text-title-lg);
+      font-size: clamp(1.25rem, 5vw, var(--text-title-lg));
     }
 
     .metric-label {
+      font-size: 12px;
       word-break: break-word;
       hyphens: auto;
     }
@@ -75,8 +76,12 @@
       gap: var(--space-md);
     }
 
+    .metric-value {
+      font-size: var(--text-title-md);
+    }
+
     .metric-label {
-      font-size: 12px;
+      font-size: 11px;
     }
   }
 </style>

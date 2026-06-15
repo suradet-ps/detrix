@@ -56,4 +56,10 @@
     color: var(--color-muted);
     letter-spacing: var(--text-caption-spacing);
   }
+
+  @media (max-inline-size: 768px) {
+    .footer {
+      padding-block: var(--space-xl);
+    }
+  }
 </style>

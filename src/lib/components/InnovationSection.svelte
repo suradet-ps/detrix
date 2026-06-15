@@ -64,5 +64,9 @@
     .innovation-grid {
       grid-template-columns: 1fr;
     }
+
+    .innovation-card {
+      padding: var(--space-lg);
+    }
   }
 </style>

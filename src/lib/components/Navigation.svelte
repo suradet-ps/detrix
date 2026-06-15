@@ -174,7 +174,7 @@
     border-radius: var(--radius-xs);
   }
 
-  @media (max-inline-size: 768px) {
+  @media (max-inline-size: 960px) {
     .hamburger {
       display: flex;
       z-index: calc(var(--z-modal) + 1);
@@ -192,6 +192,7 @@
       z-index: var(--z-modal);
       overflow-y: auto;
       padding-block: var(--space-xxl);
+      padding-inline: var(--space-lg);
     }
 
     .nav-menu--open {

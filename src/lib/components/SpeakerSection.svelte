@@ -61,5 +61,9 @@
     .speaker-grid {
       grid-template-columns: 1fr;
     }
+
+    .speaker-card {
+      padding: var(--space-lg);
+    }
   }
 </style>
