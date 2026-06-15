@@ -81,8 +81,22 @@
   aria-modal="true"
   aria-label="Navigation menu"
 >
-  <div class="nav-overlay-bg" aria-hidden="true"></div>
-  <div class="nav-overlay-content">
+  <!-- backdrop click closes menu -->
+  <div class="nav-overlay-bg" aria-hidden="true" onclick={closeMenu}></div>
+
+  <div class="nav-overlay-content" onclick={(e) => e.stopPropagation()} onkeydown={(e) => e.stopPropagation()} role="none">
+    <button
+      class="nav-overlay-close"
+      onclick={closeMenu}
+      aria-label="Close menu"
+      type="button"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
     {#each navLinks as { href, label }, i}
       <a
         href={href}
@@ -241,7 +255,7 @@
 
   /* ─── Hamburger ─── */
   .hamburger {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -256,9 +270,9 @@
     z-index: calc(var(--z-modal) + 1);
   }
 
-  @media (min-inline-size: 768px) {
+  @media (max-inline-size: 767px) {
     .hamburger {
-      display: none;
+      display: flex;
     }
   }
 
@@ -328,6 +342,39 @@
     height: 100%;
     padding: var(--space-xxl);
     overflow-y: auto;
+  }
+
+  .nav-overlay-close {
+    position: absolute;
+    inset-block-start: var(--space-md);
+    inset-inline-end: var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 44px;
+    block-size: 44px;
+    background: transparent;
+    border: none;
+    color: var(--color-on-primary);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-overlay--open .nav-overlay-close {
+    opacity: 0.7;
+    transition-delay: 0.3s;
+  }
+
+  .nav-overlay-close:hover {
+    opacity: 1;
+  }
+
+  .nav-overlay-close:focus-visible {
+    outline: 2px solid var(--color-info-border);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
   }
 
   .nav-overlay-link {
