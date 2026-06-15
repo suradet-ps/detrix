@@ -7,6 +7,7 @@
 <div class="speaker-grid">
   {#each items as item (item.id)}
     <article class="speaker-card">
+      <div class="speaker-accent" aria-hidden="true"></div>
       <div class="speaker-card-body">
         <h3 class="speaker-title">{item.title}</h3>
         {#if item.description}
@@ -25,17 +26,25 @@
   }
 
   .speaker-card {
-    padding: var(--space-xl);
+    display: flex;
     background-color: var(--color-canvas);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-md);
-    overflow-wrap: anywhere;
+    overflow: hidden;
+    min-inline-size: 0;
+  }
+
+  .speaker-accent {
+    flex-shrink: 0;
+    inline-size: 4px;
+    background-color: var(--color-signature-coral);
   }
 
   .speaker-card-body {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
+    padding: var(--space-lg);
     min-inline-size: 0;
   }
 
@@ -67,8 +76,18 @@
       gap: var(--space-md);
     }
 
-    .speaker-card {
-      padding: var(--space-lg);
+    .speaker-card-body {
+      padding: var(--space-md);
+    }
+
+    .speaker-title {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .speaker-description {
+      font-size: 13px;
+      line-height: 1.5;
     }
   }
 </style>

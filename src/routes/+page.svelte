@@ -243,10 +243,11 @@
 
 
   .recognition-card {
-    padding: var(--space-xl);
+    padding: var(--space-xl) var(--space-lg);
     background-color: var(--color-canvas);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-md);
+    border-block-start: 3px solid var(--color-signature-coral);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -290,7 +291,15 @@
     }
 
     .recognition-card {
-      padding: var(--space-lg);
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .recognition-stat {
+      font-size: var(--text-title-lg);
+    }
+
+    .recognition-label {
+      font-size: 12px;
     }
 
     .state-error {
