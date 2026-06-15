@@ -59,10 +59,12 @@
     <form
       method="POST"
       action="?/create"
-      use:enhance={async ({ formElement, submitter, formData: fd, cancel }) => {
+      use:enhance={async ({ formElement, cancel }) => {
+        cancel();
         isSubmitting = true;
         validationErrors = {};
 
+        const fd = new FormData(formElement);
         const raw = Object.fromEntries(fd) as Record<string, string>;
         const clientData = {
           title: raw.title ?? '',
