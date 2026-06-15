@@ -25,7 +25,7 @@ export function getSupabase(): SupabaseClient {
     },
     global: {
       headers: {
-        'X-Client-Info': `suradet-portfolio@${version}`
+        'X-Client-Info': `detrix@${version}`
       }
     }
   });

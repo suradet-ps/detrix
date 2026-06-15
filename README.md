@@ -1,19 +1,19 @@
-# Suradet Pratomsak | Portfolio
+# Detrix
 
 > Personal portfolio showcasing professional works, innovations, speaker experiences, and academic contributions.
 
 [![License](https://img.shields.io/badge/license-MIT-blue?logo=opensourceinitiative&logoColor=ffffff)](LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/suradet-ps/suradet-portfolio?color=blue&logo=git&logoColor=ffffff)](https://github.com/suradet-ps/suradet-portfolio/commits/main)
+[![Last Commit](https://img.shields.io/github/last-commit/suradet-ps/detrix?color=blue&logo=git&logoColor=ffffff)](https://github.com/suradet-ps/detrix/commits/main)
 [![TypeScript](https://img.shields.io/badge/TypeScript-%5E5-3178C6?logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
 [![Svelte](https://img.shields.io/badge/Svelte-%5E5-FF3E00?logo=svelte&logoColor=ffffff)](https://svelte.dev/)
 [![SvelteKit](https://img.shields.io/badge/SvelteKit-%5E2-FF3E00?logo=svelte&logoColor=ffffff)](https://kit.svelte.dev/)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=ffffff)](https://supabase.com/)
 [![Bun](https://img.shields.io/badge/Bun-1.3.14-f9f1e1?logo=bun&logoColor=ffffff)](https://bun.sh/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?logo=github&logoColor=ffffff)](https://github.com/suradet-ps/suradet-portfolio/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?logo=github&logoColor=ffffff)](https://github.com/suradet-ps/detrix/pulls)
 
 ---
 
-**Suradet Portfolio** is a modern, server-side-rendered portfolio application for healthcare professionals. Portfolio items are fetched from a **Supabase** backend and dynamically grouped by category, with a key-protected route for adding new entries. Built with Svelte 5 runes, SvelteKit 2, and strict TypeScript.
+**Detrix** is a modern, server-side-rendered portfolio application for healthcare professionals. Portfolio items are fetched from a **Supabase** backend and dynamically grouped by category, with a key-protected route for adding new entries. Built with Svelte 5 runes, SvelteKit 2, and strict TypeScript.
 
 ---
 
@@ -54,8 +54,8 @@
 ### Install
 
 ```bash
-git clone https://github.com/suradet-ps/suradet-portfolio.git
-cd suradet-portfolio
+git clone https://github.com/suradet-ps/detrix.git
+cd detrix
 bun install
 ```
 
