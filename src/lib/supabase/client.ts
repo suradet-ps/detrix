@@ -1,23 +1,17 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { building, version } from '$app/environment';
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 
 let client: SupabaseClient | null = null;
-
-function getEnv(name: string): string {
-  const val = import.meta.env[name] as string | undefined;
-  if (!val && !building) {
-    throw new Error(`Missing environment variable: ${name}`);
-  }
-  return val ?? '';
-}
 
 export function getSupabase(): SupabaseClient {
   if (client) return client;
 
-  const supabaseUrl = getEnv('VITE_SUPABASE_URL');
-  const supabaseAnonKey = getEnv('VITE_SUPABASE_ANON_KEY');
+  if (!building && (!PUBLIC_SUPABASE_URL || !PUBLIC_SUPABASE_ANON_KEY)) {
+    throw new Error('Missing Supabase environment variables (PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)');
+  }
 
-  client = createClient(supabaseUrl, supabaseAnonKey, {
+  client = createClient(PUBLIC_SUPABASE_URL ?? '', PUBLIC_SUPABASE_ANON_KEY ?? '', {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
