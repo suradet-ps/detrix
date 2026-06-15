@@ -38,6 +38,7 @@
     align-items: center;
     gap: var(--space-xs);
     text-align: center;
+    min-inline-size: 0;
   }
 
   .metric-value {
@@ -52,6 +53,8 @@
     font-weight: var(--text-caption-weight);
     letter-spacing: var(--text-caption-spacing);
     color: var(--color-muted);
+    overflow-wrap: anywhere;
+    max-inline-size: 100%;
   }
 
   @media (max-inline-size: 768px) {
@@ -66,6 +69,7 @@
 
     .metric-label {
       font-size: 12px;
+      overflow-wrap: anywhere;
       word-break: break-word;
       hyphens: auto;
     }
@@ -73,7 +77,7 @@
 
   @media (max-inline-size: 480px) {
     .metrics-grid {
-      gap: var(--space-md);
+      gap: var(--space-sm);
     }
 
     .metric-value {

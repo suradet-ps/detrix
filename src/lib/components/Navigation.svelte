@@ -156,7 +156,7 @@
   .nav-menu {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
   }
 
   .nav-link {
@@ -166,6 +166,7 @@
     text-decoration: none;
     transition: color 0.15s ease;
     padding-block: var(--space-xs);
+    white-space: nowrap;
   }
 
   .nav-link:focus-visible {
@@ -174,7 +175,7 @@
     border-radius: var(--radius-xs);
   }
 
-  @media (max-inline-size: 960px) {
+  @media (max-inline-size: 1024px) {
     .hamburger {
       display: flex;
       z-index: calc(var(--z-modal) + 1);
@@ -206,6 +207,7 @@
       align-items: center;
       font-size: var(--text-title-md);
       font-weight: var(--text-title-md-weight);
+      white-space: normal;
     }
   }
 </style>

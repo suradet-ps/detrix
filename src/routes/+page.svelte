@@ -252,6 +252,8 @@
     flex-direction: column;
     gap: var(--space-xs);
     align-items: center;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
   }
 
   .recognition-stat {
@@ -266,6 +268,10 @@
     font-weight: var(--text-caption-weight);
     letter-spacing: var(--text-caption-spacing);
     color: var(--color-muted);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+    max-inline-size: 100%;
   }
 
   @media (max-inline-size: 1024px) {

@@ -29,12 +29,14 @@
     background-color: var(--color-canvas);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-md);
+    overflow-wrap: anywhere;
   }
 
   .speaker-card-body {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    min-inline-size: 0;
   }
 
   .speaker-title {
@@ -42,6 +44,7 @@
     font-weight: var(--text-label-md-weight);
     line-height: var(--text-label-md-line);
     color: var(--color-ink);
+    overflow-wrap: break-word;
   }
 
   .speaker-description {
@@ -49,6 +52,7 @@
     font-weight: var(--text-body-md-weight);
     line-height: var(--text-body-md-line);
     color: var(--color-body);
+    overflow-wrap: break-word;
   }
 
   @media (max-inline-size: 1024px) {
@@ -60,6 +64,7 @@
   @media (max-inline-size: 768px) {
     .speaker-grid {
       grid-template-columns: 1fr;
+      gap: var(--space-md);
     }
 
     .speaker-card {
