@@ -2,7 +2,7 @@
   import MetricsGrid from './MetricsGrid.svelte';
 
   let { metrics }: {
-    metrics: { academicWorks: number; speakerSessions: number; innovations: number; professionalsReached: number }
+    metrics: { academicWorks: number; speakerSessions: number; innovations: number }
   } = $props();
 </script>
 

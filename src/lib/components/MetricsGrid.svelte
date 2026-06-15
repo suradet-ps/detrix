@@ -1,6 +1,6 @@
 <script lang="ts">
   let { metrics }: {
-    metrics: { academicWorks: number; speakerSessions: number; innovations: number; professionalsReached: number }
+    metrics: { academicWorks: number; speakerSessions: number; innovations: number }
   } = $props();
 </script>
 
@@ -17,16 +17,12 @@
     <span class="metric-value">{metrics.innovations}+</span>
     <span class="metric-label">Innovations</span>
   </div>
-  <div class="metric-item">
-    <span class="metric-value">{metrics.professionalsReached}+</span>
-    <span class="metric-label">Healthcare Professionals Reached</span>
-  </div>
 </div>
 
 <style>
   .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
     border-top: 1px solid var(--color-hairline);
     padding-block-start: var(--space-xxl);
@@ -57,35 +53,17 @@
     max-inline-size: 100%;
   }
 
-  @media (max-inline-size: 768px) {
+  @media (max-inline-size: 480px) {
     .metrics-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-lg);
+      gap: var(--space-md);
     }
 
     .metric-value {
-      font-size: clamp(1.25rem, 5vw, var(--text-title-lg));
+      font-size: var(--text-title-lg);
     }
 
     .metric-label {
       font-size: 12px;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      hyphens: auto;
-    }
-  }
-
-  @media (max-inline-size: 480px) {
-    .metrics-grid {
-      gap: var(--space-sm);
-    }
-
-    .metric-value {
-      font-size: var(--text-title-md);
-    }
-
-    .metric-label {
-      font-size: 11px;
     }
   }
 </style>

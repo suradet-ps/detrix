@@ -115,7 +115,7 @@
   }
 
   .hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -127,6 +127,7 @@
     padding: 0;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    z-index: calc(var(--z-modal) + 1);
   }
 
   .hamburger span {
@@ -154,60 +155,39 @@
   }
 
   .nav-menu {
-    display: flex;
+    display: none;
+    position: fixed;
+    inset: 0;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: var(--space-lg);
+    gap: var(--space-sm);
+    background-color: var(--color-canvas);
+    z-index: var(--z-modal);
+    overflow-y: auto;
+    padding-block: var(--space-xxl);
+    padding-inline: var(--space-lg);
+  }
+
+  .nav-menu--open {
+    display: flex;
   }
 
   .nav-link {
-    font-size: var(--text-body-md);
-    font-weight: var(--text-body-md-weight);
+    padding: var(--space-md) var(--space-lg);
+    min-block-size: 48px;
+    display: flex;
+    align-items: center;
+    font-size: var(--text-title-md);
+    font-weight: var(--text-title-md-weight);
     color: var(--color-body);
     text-decoration: none;
     transition: color 0.15s ease;
-    padding-block: var(--space-xs);
-    white-space: nowrap;
   }
 
   .nav-link:focus-visible {
     outline: 2px solid var(--color-info-border);
     outline-offset: 4px;
     border-radius: var(--radius-xs);
-  }
-
-  @media (max-inline-size: 1024px) {
-    .hamburger {
-      display: flex;
-      z-index: calc(var(--z-modal) + 1);
-    }
-
-    .nav-menu {
-      display: none;
-      position: fixed;
-      inset: 0;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: var(--space-sm);
-      background-color: var(--color-canvas);
-      z-index: var(--z-modal);
-      overflow-y: auto;
-      padding-block: var(--space-xxl);
-      padding-inline: var(--space-lg);
-    }
-
-    .nav-menu--open {
-      display: flex;
-    }
-
-    .nav-link {
-      padding: var(--space-md) var(--space-lg);
-      min-block-size: 48px;
-      display: flex;
-      align-items: center;
-      font-size: var(--text-title-md);
-      font-weight: var(--text-title-md-weight);
-      white-space: normal;
-    }
   }
 </style>
