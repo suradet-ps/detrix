@@ -1,13 +1,12 @@
 # Detrix
 
-```
-██████╗ ███████╗████████╗██████╗ ██╗██╗  ██╗
-██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██║╚██╗██╔╝
-██║  ██║█████╗     ██║   ██████╔╝██║ ╚███╔╝
-██║  ██║██╔══╝     ██║   ██╔══██╗██║ ███╔╝
-██████╔╝███████╗   ██║   ██║  ██║██║██╔██╗
-╚═════╝ ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝╚═╝
-```
+[![CI](https://github.com/suradet-ps/detrix/actions/workflows/ci.yml/badge.svg)](https://github.com/suradet-ps/detrix/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Svelte v5](https://img.shields.io/badge/Svelte-v5-FF3E00.svg?logo=svelte&logoColor=white)](https://svelte.dev/)
+[![SvelteKit v2](https://img.shields.io/badge/SvelteKit-v2-FF3E00.svg?logo=svelte&logoColor=white)](https://svelte.dev/docs/kit)
+[![TypeScript v6](https://img.shields.io/badge/TypeScript-v6-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Supabase v2](https://img.shields.io/badge/Supabase-v2-3FCF8E.svg?logo=supabase&logoColor=white)](https://supabase.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/suradet-ps/detrix/issues)
 
 ---
 
